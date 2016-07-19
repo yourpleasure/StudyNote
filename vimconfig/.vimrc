@@ -41,7 +41,7 @@ Plugin 'raymond-w-ko/vim-lua-indent'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 call vundle#end()
-
+let mapleader = "-"
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
@@ -61,7 +61,6 @@ set nu
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
@@ -206,6 +205,19 @@ set statusline+=%*
 " nginx syntax
 au BufRead,BufNewFile /usr/local/openresty/nginx/conf/* if &ft == '' | setfiletype nginx | endif 
 
+" YCM
+let g:ycm_confirm_extra_conf = 0
+
 " qucikfix
-nmap <F3> :cp<cr>
-nmap <F4> :cn<cr>
+nnoremap <F3> :cp<cr>
+nnoremap <F4> :cn<cr>
+" vim study test
+"TEST
+inoremap <c-d> <esc>ddO
+inoremap <c-u> <esc>viwUea
+nnoremap <c-u> viwUel
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+iabbrev @@ lixu19890724@163.com
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
