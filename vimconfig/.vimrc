@@ -221,3 +221,10 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 iabbrev @@ lixu19890724@163.com
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+inoremap jk <esc>
+inoremap <esc> <nop>
+nnoremap <Up> <nop>
+nnoremap <Down> <nop>
+nnoremap <Left> <nop>
+nnoremap <Right> <nop>
+autocmd BufWritePre,BufRead * :normal gg=G
