@@ -40,6 +40,7 @@ Plugin 'vim-scripts/bash-support.vim'
 Plugin 'raymond-w-ko/vim-lua-indent'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'suan/vim-instant-markdown'
 call vundle#end()
 let mapleader = "-"
 " allow backspacing over everything in insert mode
@@ -211,6 +212,7 @@ let g:ycm_confirm_extra_conf = 0
 " qucikfix
 nnoremap <F3> :cp<cr>
 nnoremap <F4> :cn<cr>
+
 " vim study test
 "TEST
 inoremap <c-d> <esc>ddO
