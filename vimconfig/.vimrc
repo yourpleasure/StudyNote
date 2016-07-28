@@ -203,13 +203,24 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+" cscope
+if filereadable("cscope.out")
+	cs add cscope.out
+elseif $CSCOPE_DB != ""
+	cs add $CSCOPE_DB
+endif
+
+" ctags
+map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+
 " nginx syntax
 au BufRead,BufNewFile /usr/local/openresty/nginx/conf/* if &ft == '' | setfiletype nginx | endif 
 
 " YCM
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
-" qucikfix
+" quickfix
 nnoremap <F3> :cp<cr>
 nnoremap <F4> :cn<cr>
 
