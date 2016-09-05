@@ -11,7 +11,7 @@
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
-	finish
+    finish
 endif
 
 " Use Vim settings, rather than Vi settings (much better!).
@@ -45,14 +45,15 @@ call vundle#end()
 let mapleader = "-"
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
+set nofoldenable
 
 if has("vms")
-	set nobackup		" do not keep a backup file, use versions instead
+    set nobackup		" do not keep a backup file, use versions instead
 else
-	set nobackup		" keep a backup file (restore to previous version)
-	set undofile		" keep an undo file (undo changes after closing)
-	set undodir=$HOME/.vim/undodir
-	set undolevels=1000
+    set nobackup		" keep a backup file (restore to previous version)
+    set undofile		" keep an undo file (undo changes after closing)
+    set undodir=$HOME/.vim/undodir
+    set undolevels=1000
 endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
@@ -62,6 +63,7 @@ set nu
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set expandtab
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
@@ -82,45 +84,45 @@ inoremap <C-U> <C-G>u<C-U>
 " Switch syntax highlighting on when the terminal has colors or when using the
 " GUI (which always has colors).
 if &t_Co > 2 || has("gui_running")
-	syntax on
+    syntax on
 
-	" Also switch on highlighting the last used search pattern.
-	set hlsearch
+    " Also switch on highlighting the last used search pattern.
+    set hlsearch
 
-	" I like highlighting strings inside C comments.
-	let c_comment_strings=1
+    " I like highlighting strings inside C comments.
+    let c_comment_strings=1
 endif
 set fileencodings=utf-8,bg18030,gbk
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-	" Enable file type detection.
-	" Use the default filetype settings, so that mail gets 'tw' set to 72,
-	" 'cindent' is on in C files, etc.
-	" Also load indent files, to automatically do language-dependent indenting.
-	filetype plugin indent on
+    " Enable file type detection.
+    " Use the default filetype settings, so that mail gets 'tw' set to 72,
+    " 'cindent' is on in C files, etc.
+    " Also load indent files, to automatically do language-dependent indenting.
+    filetype plugin indent on
 
-	" Put these in an autocmd group, so that we can delete them easily.
-	augroup vimrcEx
-		au!
+    " Put these in an autocmd group, so that we can delete them easily.
+    augroup vimrcEx
+        au!
 
-		" For all text files set 'textwidth' to 78 characters.
-		autocmd FileType text setlocal textwidth=78
+        " For all text files set 'textwidth' to 78 characters.
+        autocmd FileType text setlocal textwidth=78
 
-		" When editing a file, always jump to the last known cursor position.
-		" Don't do it when the position is invalid or when inside an event handler
-		" (happens when dropping a file on gvim).
-		autocmd BufReadPost *
-					\ if line("'\"") >= 1 && line("'\"") <= line("$") |
-					\   exe "normal! g`\"" |
-					\ endif
+        " When editing a file, always jump to the last known cursor position.
+        " Don't do it when the position is invalid or when inside an event handler
+        " (happens when dropping a file on gvim).
+        autocmd BufReadPost *
+                    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+                    \   exe "normal! g`\"" |
+                    \ endif
 
-	augroup END
+    augroup END
 
 else
 
-	set autoindent		" always set autoindenting on
+    set autoindent		" always set autoindenting on
 
 endif " has("autocmd")
 
@@ -128,15 +130,15 @@ endif " has("autocmd")
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-				\ | wincmd p | diffthis
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+                \ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')
-	" Prevent that the langmap option applies to characters that result from a
-	" mapping.  If unset (default), this may break plugins (but it's backward
-	" compatible).
-	set langnoremap
+    " Prevent that the langmap option applies to characters that result from a
+    " mapping.  If unset (default), this may break plugins (but it's backward
+    " compatible).
+    set langnoremap
 endif
 " Add optional packages.
 "
@@ -148,32 +150,32 @@ endif
 
 " go support 
 let g:tagbar_type_go = {
-			\ 'ctagstype' : 'go',
-			\ 'kinds'     : [
-			\ 'p:package',
-			\ 'i:imports:1',
-			\ 'c:constants',
-			\ 'v:variables',
-			\ 't:types',
-			\ 'n:interfaces',
-			\ 'w:fields',
-			\ 'e:embedded',
-			\ 'm:methods',
-			\ 'r:constructor',
-			\ 'f:functions'
-			\ ],
-			\ 'sro' : '.',
-			\ 'kind2scope' : {
-			\ 't' : 'ctype',
-			\ 'n' : 'ntype'
-			\ },
-			\ 'scope2kind' : {
-			\ 'ctype' : 't',
-			\ 'ntype' : 'n'
-			\ },
-			\ 'ctagsbin'  : 'gotags',
-			\ 'ctagsargs' : '-sort -silent'
-			\ }
+            \ 'ctagstype' : 'go',
+            \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+            \ ],
+            \ 'sro' : '.',
+            \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+            \ },
+            \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+            \ },
+            \ 'ctagsbin'  : 'gotags',
+            \ 'ctagsargs' : '-sort -silent'
+            \ }
 
 " NERD tree
 let NERDChristmasTree=0
@@ -205,9 +207,9 @@ set statusline+=%*
 
 " cscope
 if filereadable("cscope.out")
-	cs add cscope.out
+    cs add cscope.out
 elseif $CSCOPE_DB != ""
-	cs add $CSCOPE_DB
+    cs add $CSCOPE_DB
 endif
 
 " ctags
@@ -227,8 +229,8 @@ nnoremap <F4> :cn<cr>
 " vim study test
 "TEST
 inoremap <c-d> <esc>ddO
-inoremap <c-u> <esc>viwUea
-nnoremap <c-u> viwUel
+inoremap <c-U> <esc>viwUea
+nnoremap <c-U> viwUel
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 iabbrev @@ lixu19890724@163.com
@@ -240,3 +242,14 @@ nnoremap <Up> <nop>
 nnoremap <Down> <nop>
 nnoremap <Left> <nop>
 nnoremap <Right> <nop>
+augroup filetype_abbr
+    autocmd!
+    autocmd FileType python nnoremap <buffer> <leader>c I# <esc>
+    autocmd FileType sh nnoremap <buffer> <leader>c I" <esc>
+    autocmd FileType python :iabbrev <buffer> iff if:<left>
+augroup END
+
+onoremap p i(
+onoremap b /return<cr>
+onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap il( :<c-u>normal! F)vi(<cr>
