@@ -18,6 +18,7 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 filetype off
+set encoding=utf-8
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -27,16 +28,17 @@ Plugin 'xolox/vim-lua-ftplugin.git'
 Plugin 'vim-scripts/taglist.vim.git'
 Plugin 'vim-scripts/cscope.vim.git'
 Plugin 'vim-scripts/ctags.vim'
-Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'chr4/nginx.vim'
 Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'vim-scripts/JavaScript-Indent'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tfnico/vim-gradle'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
+Plugin 'dscleaver/sbt-quickfix'
 Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/bash-support.vim'
 Plugin 'raymond-w-ko/vim-lua-indent'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -190,20 +192,21 @@ autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Open a NERDTree
 nmap <F5> :NERDTreeToggle<cr>
+nmap <F6> :NERDTreeFind<cr>
 " Tagbar
 let g:tagbar_width=35
 let g:tagbar_autofocus=1
-nmap <F6> :TagbarToggle<cr>
+nmap <F7> :TagbarToggle<cr>
 
 " configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" let g:syntastic_check_on_open=1
+" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_wq = 0
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 " cscope
 if filereadable("cscope.out")
@@ -219,13 +222,37 @@ map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 au BufRead,BufNewFile /usr/local/openresty/nginx/conf/* if &ft == '' | setfiletype nginx | endif 
 
 " YCM
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_confirm_extra_conf = 0
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
 " quickfix
 nnoremap <F3> :cp<cr>
 nnoremap <F4> :cn<cr>
 
+" Rainbow Parentheses
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max            = 16
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 " vim study test
 "TEST
 inoremap <c-d> <esc>ddO
@@ -234,6 +261,7 @@ nnoremap <c-U> viwUel
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 iabbrev @@ lixu19890724@163.com
+iabbrev ssig Gao Liang<cr>lixu19890724@163.com
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 inoremap jk <esc>
@@ -253,3 +281,5 @@ onoremap p i(
 onoremap b /return<cr>
 onoremap in( :<c-u>normal! f(vi(<cr>
 onoremap il( :<c-u>normal! F)vi(<cr>
+nnoremap <leader>line :%s/$/,/<cr>:%j<cr>:s/ //g<cr>:s/,$//<cr>
+nnoremap <leader>ta :%s/\|//g<cr>:%s/^ \+//<cr>:%s/ \+$//<cr>:%s/ \+/\t/g<cr>
