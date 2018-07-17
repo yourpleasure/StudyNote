@@ -19,6 +19,9 @@ endif
 set nocompatible
 filetype off
 set encoding=utf-8
+if has('python3')
+    silent! python3 1
+endif
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -36,13 +39,16 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'vim-scripts/JavaScript-Indent'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tfnico/vim-gradle'
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
+Plugin 'dbeniamine/cheat.sh-vim'
 Plugin 'dscleaver/sbt-quickfix'
 Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/bash-support.vim'
 Plugin 'raymond-w-ko/vim-lua-indent'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
+Plugin 'Vimjas/vim-python-pep8-indent'
 call vundle#end()
 let mapleader = "-"
 " allow backspacing over everything in insert mode
@@ -55,7 +61,7 @@ else
     set nobackup		" keep a backup file (restore to previous version)
     set undofile		" keep an undo file (undo changes after closing)
     set undodir=$HOME/.vim/undodir
-    set undolevels=1000
+    set undolevels=100
 endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
@@ -181,7 +187,7 @@ let g:tagbar_type_go = {
 
 " NERD tree
 let NERDChristmasTree=0
-let NERDTreeWinSize=35
+let NERDTreeWinSize=20
 let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 let NERDTreeShowBookmarks=1
@@ -199,14 +205,16 @@ let g:tagbar_autofocus=1
 nmap <F7> :TagbarToggle<cr>
 
 " configure syntastic syntax checking to check on open as well as save
-" let g:syntastic_check_on_open=1
-" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_wq = 0
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
+let g:syntastic_check_on_open=1
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_shell_checkers = ['shellcheck']
+let g:syntastic_python_checkers = ['pylint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 " cscope
 if filereadable("cscope.out")
@@ -264,6 +272,8 @@ iabbrev @@ lixu19890724@163.com
 iabbrev ssig Gao Liang<cr>lixu19890724@163.com
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+nnoremap <leader>a" :%s/^/"/<cr>:%s/$/"/<cr>
+nnoremap <leader>I 0gg<cr>VG<cr>I
 inoremap jk <esc>
 inoremap <esc> <nop>
 nnoremap <Up> <nop>
@@ -282,4 +292,6 @@ onoremap b /return<cr>
 onoremap in( :<c-u>normal! f(vi(<cr>
 onoremap il( :<c-u>normal! F)vi(<cr>
 nnoremap <leader>line :%s/$/,/<cr>:%j<cr>:s/ //g<cr>:s/,$//<cr>
+nnoremap <leader>line2 :%s/^/"/g<cr>:%s/$/"/g<cr>:%s/$/,/<cr>:%j<cr>:s/ //g<cr>:s/,$//<cr>
+nnoremap <leader>line3 :%s/^/("/g<cr>:%s/$/")/g<cr>:%s/$/,/<cr>:%j<cr>:s/ //g<cr>:s/,$//<cr>
 nnoremap <leader>ta :%s/\|//g<cr>:%s/^ \+//<cr>:%s/ \+$//<cr>:%s/ \+/\t/g<cr>
