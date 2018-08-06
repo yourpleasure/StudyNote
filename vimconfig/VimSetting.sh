@@ -14,5 +14,5 @@ then
     exit -2
 fi
 cd ~/.vim/bundle/YouCompleteMe
-python3 install.py
+python3 install.py --system-boost --system-libclang --clang-completer --go-completer --java-completer
 cd -
