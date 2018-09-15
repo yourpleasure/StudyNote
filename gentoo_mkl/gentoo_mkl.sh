@@ -79,7 +79,7 @@ mkl_add_profile() {
 	EOF
 	cat >> lapack-${prof}.pc <<-EOF || echo "error"
 		Requires: blas
-		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core -lmkl_lapack ${external1} ${external2} -lpthread -lm -ldl
+		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core ${external1} ${external2} -lpthread -lm -ldl
 	EOF
 	echo ${MKL_LIBDIR}
 	for x in blas cblas lapack; do
