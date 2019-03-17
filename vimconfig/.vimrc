@@ -48,7 +48,15 @@ Plugin 'raymond-w-ko/vim-lua-indent'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
+Plugin 'fatih/vim-go'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'Chiel92/vim-autoformat'
 Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 let mapleader = "-"
 " allow backspacing over everything in insert mode
@@ -75,13 +83,14 @@ map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 set showmatch
 set noerrorbells
 set visualbell
-:set number relativenumber
+set number
+set relativenumber
 
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -196,9 +205,11 @@ let g:tagbar_type_go = {
 
 " NERD tree
 let NERDChristmasTree=0
-let NERDTreeWinSize=20
+let NERDTreeWinSize=30
 let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
+
+let NERDTreeRespectWildIgnore=1
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
 " Automatically open a NERDTree if no files where specified
@@ -220,9 +231,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_shell_checkers = ['shellcheck']
-let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
+" let g:syntastic_python_checkers = ['pylint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{FugitiveStatusline()}
 set statusline+=%*
 
 " cscope
@@ -284,7 +297,6 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 nnoremap <leader>a" :%s/^/"/<cr>:%s/$/"/<cr>
 nnoremap <leader>I 0gg<cr>VG<cr>I
 inoremap jk <esc>
-inoremap <esc> <nop>
 nnoremap <Up> <nop>
 nnoremap <Down> <nop>
 nnoremap <Left> <nop>
@@ -295,6 +307,12 @@ augroup filetype_abbr
     autocmd FileType sh nnoremap <buffer> <leader>c I" <esc>
     autocmd FileType python :iabbrev <buffer> iff if:<left>
 augroup END
+augroup autoformat
+    autocmd BufWrite * :Autoformat
+augroup END
+
+let g:formatdef_scalafmt = "'scalafmt --stdin'"
+let g:formatters_scala = ['scalafmt']
 
 onoremap p i(
 onoremap b /return<cr>
