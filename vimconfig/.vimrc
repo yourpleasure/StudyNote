@@ -61,6 +61,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-surround'
+Plugin 'Yggdroot/indentLine'
 call vundle#end()
 let mapleader = "-"
 " allow backspacing over everything in insert mode
